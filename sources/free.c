@@ -1,0 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sakkaya <sakkaya@student.42kocaeli.com.tr    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/28 12:42:17 by sakkaya            #+#    #+#             */
+/*   Updated: 2022/07/26 20:11:27 by sakkaya           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../includes/push_swap.h"
+
+void	ft_free(t_base *base, bool is_exit)
+{
+	free(base->a);
+	free(base->b);
+	free(base->c);
+	if (is_exit)
+		exit(0);
+}
