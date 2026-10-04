@@ -1,108 +1,114 @@
-# 🔄 Push_swap
+# 🔄 push_swap
 
-> **İki stack ve sınırlı komutlarla tam sayı sıralama**  
-> C dilinde algoritma tasarımı, veri yapıları ve işlem sayısını azaltma üzerine bir 42 projesi.
+> **An integer-sorting project in C using two stacks and a limited set of operations, developed as part of the 42 School curriculum.**
 
-## 🚀 Proje hakkında
+## 🎯 About the project
 
-`push_swap`, verilen benzersiz tam sayıları iki stack (`A` ve `B`) üzerinde, sınırlı bir işlem kümesiyle artan sıraya dizer. Program sıralama sonucunu değil, uygulanması gereken komut dizisini üretir. Ayrı `checker` programı bu komutları çalıştırıp sonucun doğruluğunu denetler.
+`push_swap` takes a list of unique integers and prints a sequence of stack operations that sorts them in ascending order. It uses two stacks, `A` and `B`, and aims to produce an efficient instruction sequence. The companion `checker` program can apply the operations and verify the result.
 
-Proje; C, stack veri yapıları, algoritma tasarımı, girdi doğrulama, maliyet hesaplama ve Makefile ile derleme konularında uygulama deneyimi sunar.
+The project explores stack data structures, algorithm design, input validation, operation-cost reasoning, and performance measurement.
 
-## 🧠 Algoritma yaklaşımı
+## 🧠 Sorting approach
 
-- Küçük girdiler özel sıralama adımlarıyla ele alınır.
-- Daha büyük girdilerde bazı değerler `A` üzerinde tutulurken diğerleri `B` stack’ine aktarılır.
-- Değerleri geri taşırken iki stack’in rotasyon maliyetleri hesaplanır; ortak yöndeki rotasyonlar birleştirilerek işlem sayısı azaltılmaya çalışılır.
-- Son adımda `A` stack’i en küçük değer en üstte olacak şekilde döndürülür.
+- Small inputs are handled with dedicated sorting steps.
+- For larger inputs, values are distributed between stacks `A` and `B`.
+- Before moving values back, the program evaluates rotation costs and combines compatible rotations where possible.
+- The final rotation places the smallest value at the top of stack `A`.
 
-## 🕹️ Kullanılan işlemler
+## 🕹️ Available operations
 
-| İşlem | Açıklama |
+| Operation | Description |
 |---|---|
-| `sa`, `sb`, `ss` | Stack’in üstündeki elemanları değiştirir |
-| `pa`, `pb` | Elemanı bir stack’ten diğerine taşır |
-| `ra`, `rb`, `rr` | Stack’i yukarı döndürür |
-| `rra`, `rrb`, `rrr` | Stack’i ters yönde döndürür |
+| `sa`, `sb`, `ss` | Swap the top elements of one or both stacks |
+| `pa`, `pb` | Push the top element from one stack to the other |
+| `ra`, `rb`, `rr` | Rotate one or both stacks upward |
+| `rra`, `rrb`, `rrr` | Rotate one or both stacks downward |
 
-## 📂 Proje yapısı
+## 📁 Project structure
 
-| Yol | Amaç |
+| Path | Purpose |
 |---|---|
-| `sources/` | Girdi kontrolü, stack işlemleri ve sıralama algoritmaları |
-| `includes/push_swap.h` | Veri yapıları ve fonksiyon bildirimleri |
-| `libraries/libft/` | Projede kullanılan yardımcı C fonksiyonları ve modülleri |
-| `Makefile` | `push_swap` ve `checker` programlarını derler |
-| `lfrasson_tester.sh` | İsteğe bağlı doğruluk ve işlem sayısı testleri |
-| `benchmark_vbrazanik.sh` | İsteğe bağlı rastgele girdi performans ölçümü |
+| `sources/` | Input validation, stack operations, and sorting logic |
+| `includes/push_swap.h` | Data structures and function declarations |
+| `libraries/libft/` | Helper C functions used by the project |
+| `Makefile` | Builds `push_swap` and `checker` |
+| `lfrasson_tester.sh` | Optional correctness and operation-count checks |
+| `benchmark_vbrazanik.sh` | Optional randomized performance measurements |
 
-## ⚙️ Gereksinimler
+## 🛠️ Requirements
 
-- C derleyicisi (`gcc` veya uyumlu)
+- A C compiler such as `gcc` or `cc`
 - `make`
-- UNIX benzeri bir ortam (Linux veya macOS)
+- A UNIX-like environment (Linux or macOS)
 
-## 🛠️ Derleme
-
-Proje klasöründe çalıştırın:
+## 🚀 Build
 
 ```bash
+git clone <repository-url>
+cd push_swap
 make
 ```
 
-Derleme `push_swap` ve `checker` çalıştırılabilir dosyalarını oluşturur.
+This creates the `push_swap` and `checker` executables.
 
-## ▶️ Kullanım
+## ▶️ Usage
 
-Sıralama komutlarını üretmek için:
+Generate operations to sort a list:
 
 ```bash
 ./push_swap 3 2 1 4
 ```
 
-Tek bir tırnaklı argüman da kullanabilirsiniz:
+You can also pass the numbers as one quoted argument:
 
 ```bash
 ./push_swap "3 2 1 4"
 ```
 
-Checker ile sonucu doğrulayın:
+Verify the result with `checker`:
 
 ```bash
 ARG="3 2 1 4"
 ./push_swap $ARG | ./checker $ARG
 ```
 
-Doğru sıralama `OK` çıktısı verir. Üretilen komut sayısını görmek için:
+A correctly sorted result prints `OK`. Count the generated operations with:
 
 ```bash
 ./push_swap 3 2 1 4 | wc -l
 ```
 
-Girdi tam sayı olmayan değerler, tekrar eden sayılar veya `int` aralığı dışındaki sayılar içerirse program hata mesajı verir.
+Invalid input, duplicate values, and integers outside the `int` range should be rejected.
 
-## 🧹 Makefile komutları
+## 🧹 Makefile commands
 
-| Komut | Açıklama |
+| Command | Description |
 |---|---|
-| `make` | `push_swap` ve `checker` programlarını derler |
-| `make clean` | Nesne dosyalarını kaldırır |
-| `make fclean` | Nesne dosyalarıyla programları ve libft arşivini kaldırır |
-| `make re` | Temiz derleme yapar |
-| `make norm` | Norminette kuruluysa ana proje dosyalarını denetler |
+| `make` | Build `push_swap` and `checker` |
+| `make clean` | Remove object files |
+| `make fclean` | Remove object files, executables, and the libft archive |
+| `make re` | Clean and rebuild |
+| `make norm` | Check the main project files with Norminette if installed |
 
-## 🌱 Öğrenme çıktıları
+## 🧠 Skills practiced
 
-- Stack yapısı ve iki stack arasında veri taşıma
-- Girdi ayrıştırma, sınır değerleri ve yinelenen değerlerin kontrolü
-- Rotasyon maliyeti ve işlem sayısı optimizasyonu
-- C’de modüler tasarım, statik kütüphaneler ve Makefile kullanımı
-- Checker ve benchmark araçlarıyla doğrulama
+- Stack operations and moving data between stacks
+- Parsing input and handling duplicates and boundary values
+- Reasoning about rotation costs and operation-count optimization
+- Modular C development and Makefiles
+- Verifying correctness and measuring performance
 
-## 🔗 Profil
+## 🏅 42 evaluation
 
-GitHub: [sakkayaa](https://github.com/sakkayaa) · LinkedIn: [Sedef Akkaya](https://www.linkedin.com/in/sedef-akkaya-0a5580228/)
+The project received a **successful score of 82/100**. The evaluation summary is included below.
+
+![42 push_swap evaluation result: successful, 82 out of 100](assets/push_swap-evaluation.png)
+
+## 👩‍💻 Author
+
+**Sedef Akkaya**  
+[GitHub](https://github.com/sakkayaa) · [LinkedIn](https://www.linkedin.com/in/sedef-akkaya-0a5580228/)
 
 ---
 
-*Az komutla sırala. Stack’leri akıllıca kullan. 🔄*
+✨ *Sort with fewer moves. Make every stack operation count.*
